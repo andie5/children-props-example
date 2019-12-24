@@ -1,8 +1,8 @@
 import React from "react";
 
-// function ErrorBox({ children }) {
-//   return <button>{children}</button>;
-// }
+function ErrorBox({ children }) {
+  return <button>{children}</button>;
+}
 
 function FirstChildOnly({ children }) {
   const items = React.Children.toArray(children);
@@ -45,9 +45,10 @@ function Tail({ children, number }) {
 }
 
 const App = () => {
-  // return <ErrorBox>This is an error box</ErrorBox>;
   return (
     <div>
+      <ErrorBox>This is an error box</ErrorBox>
+      <br />
       <FirstChildOnly>
         <div>1st element</div>
         <div>2nd element</div>
