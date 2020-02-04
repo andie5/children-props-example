@@ -1,80 +1,45 @@
 import React from "react";
 
-function ErrorBox({ children }) {
-  return <button>{children}</button>;
-}
+const Dialog = ({ children }) => {
+  const childrenArray = React.Children.toArray(children);
 
-function FirstChildOnly({ children }) {
-  const items = React.Children.toArray(children);
+  const correctChildren = ["Title", "Body", "Footer"];
+  const incorrect = childrenArray.find(child => {
+    console.log("CHILD:", child.type.name);
+    return !correctChildren.includes(child.type.name);
+  });
 
-  console.log("items", items);
+  if (incorrect) {
+    console.log("You have passed an incorrect child", incorrect);
+    return null;
+  }
 
-  return <div>First child: {items.slice(0, 1)}</div>;
-}
+  return <div style={{ border: "1px solid black" }}>{children}</div>;
+};
 
-function LastChildOnly({ children }) {
-  const items = React.Children.toArray(children);
+const Title = ({ children }) => {
+  return <h1 style={{ textAlign: "left" }}>{children}</h1>;
+};
 
-  console.log("items", items);
+const Footer = ({ children }) => {
+  return <div style={{ textAlign: "right" }}>{children}</div>;
+};
 
-  return <div>Last child: {items.slice(-1)[0]}</div>;
-}
+const Body = ({ children }) => {
+  return <div style={{ textAlign: "left" }}>{children}</div>;
+};
 
-function Head({ children, number }) {
-  const items = React.Children.toArray(children);
-
-  console.log("items", items);
-
-  return (
-    <div>
-      1st {number} children: {items.slice(0, number)}
-    </div>
-  );
-}
-
-function Tail({ children, number }) {
-  const items = React.Children.toArray(children);
-
-  console.log("items", items);
-
-  return (
-    <div>
-      Last {number} children: {items.slice(-number)}
-    </div>
-  );
-}
+const Wrong = () => {
+  return;
+};
 
 const App = () => {
   return (
-    <div>
-      <ErrorBox>This is an error box</ErrorBox>
-      <br />
-      <FirstChildOnly>
-        <div>1st element</div>
-        <div>2nd element</div>
-      </FirstChildOnly>
-      <br />
-      <LastChildOnly>
-        <div>1st element</div>
-        <div>2nd element</div>
-        <div>3rd element</div>
-      </LastChildOnly>
-      <br />
-      <Head number={3}>
-        <div>1st element</div>
-        <div>2nd element</div>
-        <div>3rd element</div>
-        <div>4th element</div>
-        <div>5th element</div>
-      </Head>
-      <br />
-      <Tail number={2}>
-        <div>1st element</div>
-        <div>2nd element</div>
-        <div>3rd element</div>
-        <div>4th element</div>
-      </Tail>
-    </div>
+    <Dialog>
+      <Title>This is a dialog component</Title>
+      <Body>This is the body</Body>
+      <Footer>Footer</Footer>
+    </Dialog>
   );
 };
 
